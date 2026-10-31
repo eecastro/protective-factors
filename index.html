@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What keeps you steady? A protective factors self-check</title>
+<meta name="description" content="An anonymous self-reflection on the protective factors that support mental health. Nothing you enter leaves your device.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F1F4F6;
+  --surface: #FFFFFF;
+  --ink: #1D2742;
+  --muted: #5E6880;
+  --line: #D3DAE3;
+  --accent: #2F7A69;
+  --accent-soft: rgba(47, 122, 105, 0.16);
+  --accent-ink: #FFFFFF;
+  --gold: #C9901A;
+  --gold-soft: rgba(201, 144, 26, 0.16);
+  --focus: #2156C7;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131926;
+    --surface: #1B2333;
+    --ink: #E5EAF3;
+    --muted: #A1AABD;
+    --line: #2E3A50;
+    --accent: #6CC3AD;
+    --accent-soft: rgba(108, 195, 173, 0.18);
+    --accent-ink: #0F1A17;
+    --gold: #EFC25A;
+    --gold-soft: rgba(239, 194, 90, 0.16);
+    --focus: #8DB3FF;
+    color-scheme: dark;
+  }
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 4rem); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* Header */
+header.intro { padding: 3.5rem 0 2.5rem; }
+header.intro h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.25rem;
+  max-width: 14ch;
+}
+header.intro .lede { font-size: 1.2rem; max-width: 62ch; margin: 0 0 1rem; }
+header.intro p { max-width: 62ch; color: var(--muted); margin: 0 0 1rem; }
+.privacy {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  max-width: 62ch;
+  margin-top: 1.5rem;
+  padding: 0.9rem 1.1rem;
+  border-left: 4px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 10px 10px 0;
+  color: var(--ink);
+}
+.privacy svg { flex: none; margin-top: 0.2rem; }
+.privacy p { margin: 0; color: var(--ink); }
+
+/* Layout */
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  padding-bottom: 4rem;
+}
+@media (min-width: 960px) {
+  .layout { grid-template-columns: minmax(0, 1fr) 360px; column-gap: 3.5rem; }
+  #part1 { grid-column: 1; grid-row: 1; }
+  #profile { grid-column: 2; grid-row: 1 / span 2; align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 1.5rem); }
+  #part2 { grid-column: 1; grid-row: 2; }
+  .mobile-progress { display: none !important; }
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.5rem;
+}
+.part-tag { font-family: var(--display); font-weight: 500; color: var(--accent); font-size: 1rem; margin: 0 0 0.25rem; }
+.section-note { color: var(--muted); max-width: 62ch; margin: 0 0 2rem; }
+
+/* Mobile progress */
+.mobile-progress {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--bg);
+  padding: calc(env(safe-area-inset-top, 0px) + 0.6rem) 0 0.6rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.95rem; color: var(--muted);
+}
+.mobile-progress .bar { height: 6px; background: var(--line); border-radius: 3px; margin-top: 0.35rem; overflow: hidden; }
+.mobile-progress .bar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width 0.3s ease; }
+
+/* Factor groups */
+.factor {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.5rem 1.5rem 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.factor-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.factor h3 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin: 0; }
+.factor-avg { font-size: 0.95rem; color: var(--muted); }
+.factor-blurb { color: var(--muted); margin: 0.2rem 0 0.5rem; }
+
+fieldset.item { border: 0; margin: 0; padding: 1.1rem 0 1.25rem; border-top: 1px solid var(--line); }
+fieldset.item:first-of-type { border-top: 0; }
+fieldset.item legend { padding: 0; margin-bottom: 0.75rem; font-weight: 700; max-width: 60ch; float: left; width: 100%; }
+fieldset.item legend + * { clear: both; }
+.scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; max-width: 420px; }
+.scale label { position: relative; display: block; cursor: pointer; }
+.scale input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.scale .dot {
+  display: grid; place-items: center;
+  height: 2.75rem;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.scale label:hover .dot { border-color: var(--accent); }
+.scale input:checked + .dot { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.scale input:focus-visible + .dot { outline: 3px solid var(--focus); outline-offset: 2px; }
+.scale-ends { display: flex; justify-content: space-between; max-width: 420px; font-size: 0.85rem; color: var(--muted); margin-top: 0.35rem; }
+
+/* Profile */
+#profile .card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.5rem;
+}
+#profile h2 { font-size: 1.5rem; }
+.count { color: var(--muted); margin: 0 0 0.5rem; font-size: 0.95rem; }
+#hex { width: 100%; height: auto; display: block; margin: 0.25rem 0 0.5rem; }
+#hex .ring { fill: none; stroke: var(--line); stroke-width: 1; }
+#hex .spoke { stroke: var(--line); stroke-width: 1; }
+#hex .shape { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; transition: all 0.45s cubic-bezier(.2,.8,.2,1); }
+#hex .pt { fill: var(--accent); transition: all 0.45s cubic-bezier(.2,.8,.2,1); }
+#hex .pt.top { fill: var(--gold); }
+#hex text { font-family: var(--body); font-size: 16px; fill: var(--ink); }
+#hex text.val { font-size: 14px; fill: var(--muted); }
+.summary { font-size: 0.98rem; }
+.summary p { margin: 0.6rem 0 0; }
+.legend-row { display: flex; gap: 0.5rem; align-items: center; }
+.swatch { width: 0.8rem; height: 0.8rem; border-radius: 50%; flex: none; }
+.not-a-test { font-size: 0.88rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 0.9rem; }
+
+/* Reflection */
+.prompt { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.25rem; }
+.prompt > label, .prompt .q { display: block; margin-top: 0; font-weight: 700; margin-bottom: 0.6rem; max-width: 60ch; }
+.prompt .hint { display: block; font-weight: 400; color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
+select, textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 2px solid var(--line);
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  width: 100%;
+}
+select { max-width: 340px; cursor: pointer; }
+textarea { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
+select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; border-color: transparent; }
+.goal-pair { display: grid; gap: 1.25rem; }
+.goal { border-top: 1px solid var(--line); padding-top: 1.1rem; margin-top: 1.1rem; }
+.goal h4 { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin: 0 0 0.75rem; }
+.goal label { display: block; font-weight: 700; margin: 0.9rem 0 0.4rem; }
+.ideas { margin-top: 0.6rem; }
+.ideas p { margin: 0 0 0.4rem; font-size: 0.9rem; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.chip {
+  font: inherit; font-size: 0.88rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  text-align: left;
+}
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+
+/* Actions */
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+.btn {
+  font: inherit; font-weight: 700;
+  border-radius: 999px;
+  padding: 0.75rem 1.4rem;
+  cursor: pointer;
+  border: 2px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn.secondary { background: transparent; color: var(--accent); }
+.btn.quiet { background: transparent; border-color: var(--line); color: var(--muted); }
+.btn:hover { filter: brightness(1.06); }
+.status { min-height: 1.5rem; color: var(--muted); font-size: 0.95rem; margin-top: 0.75rem; }
+
+footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--muted); font-size: 0.92rem; }
+footer p { max-width: 70ch; margin: 0 0 0.75rem; }
+footer strong { color: var(--ink); }
+
+#printout { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; }
+  body > *:not(#printout) { display: none !important; }
+  #printout { display: block; padding: 0; }
+  #printout h1 { font-family: var(--display); font-size: 20pt; margin: 0 0 4pt; }
+  #printout h2 { font-size: 13pt; margin: 14pt 0 4pt; }
+  #printout p, #printout li { margin: 0 0 4pt; }
+  #printout table { border-collapse: collapse; width: 100%; margin-top: 6pt; }
+  #printout td, #printout th { border: 1px solid #999; padding: 4pt 6pt; text-align: left; }
+  #printout .ans { white-space: pre-wrap; border-left: 2px solid #999; padding-left: 8pt; }
+}
+</style>
+</head>
+<body>
+
+<header class="intro wrap">
+  <h1>What keeps you steady?</h1>
+  <p class="lede">Protective factors are the relationships, habits, and ways of thinking that support your mental health and help you recover when life gets hard. The more of them you have, the better prepared you are for setbacks.</p>
+  <p>Some protective factors aren’t up to you, like your genes, your family, or where you grew up. Plenty of others are: who you spend time with, how you handle stress, and what you do with your days. This self-check helps you notice where you’re already strong and choose what to build next.</p>
+  <p>It takes about 10 minutes. Part 1 is 15 quick ratings. Part 2 is a short written reflection.</p>
+  <div class="privacy" role="note">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    <p><strong>This page is anonymous.</strong> It doesn’t ask for your name, and nothing you enter is sent or saved anywhere. Your answers exist only in this browser tab and disappear when you close it. You decide whether to save or print a copy.</p>
+  </div>
+</header>
+
+<main class="wrap layout">
+
+  <section id="part1" aria-labelledby="p1-title">
+    <div class="mobile-progress" aria-hidden="true">
+      <span id="mp-text">0 of 15 answered</span>
+      <div class="bar"><span id="mp-bar"></span></div>
+    </div>
+    <p class="part-tag">Part 1</p>
+    <h2 id="p1-title">Rate your protective factors</h2>
+    <p class="section-note">For each statement, choose how true it is for you lately. Go with your first honest reaction. There are no right answers.</p>
+    <div id="factors"></div>
+  </section>
+
+  <aside id="profile" aria-labelledby="profile-title">
+    <div class="card">
+      <h2 id="profile-title">Your profile</h2>
+      <p class="count" id="count" aria-live="polite">0 of 15 answered</p>
+      <svg id="hex" viewBox="0 0 400 330" role="img" aria-labelledby="hex-desc">
+        <desc id="hex-desc">A six-sided chart of your average rating in each protective factor, from 1 to 5.</desc>
+      </svg>
+      <div class="summary" id="summary" aria-live="polite">
+        <p>Your shape fills in as you answer. Each point shows your average for that factor, from 1 at the center to 5 at the edge.</p>
+      </div>
+      <p class="not-a-test">This is a reflection tool, not a test or a diagnosis. There’s no passing score, and everyone’s shape looks different.</p>
+    </div>
+  </aside>
+
+  <section id="part2" aria-labelledby="p2-title">
+    <p class="part-tag">Part 2</p>
+    <h2 id="p2-title">Reflect and plan</h2>
+    <p class="section-note">Use your profile to answer these. Write as much or as little as you like. Your words stay on this device.</p>
+
+    <div class="prompt">
+      <label for="best">Which protective factor has helped you most during difficult times?
+        <span class="hint">We’ve suggested your highest-rated one, but pick whichever feels truest.</span></label>
+      <select id="best"></select>
+      <label for="best-how" style="margin-top:1.1rem">How exactly have you used it to get through something before?
+        <span class="hint">Think of one specific moment. What did you do, and how did it help?</span></label>
+      <textarea id="best-how"></textarea>
+    </div>
+
+    <div class="prompt">
+      <p class="q">Which two protective factors would you like to strengthen?
+        <span class="hint">We’ve suggested your two lowest-rated ones. Change them if something else matters more to you.</span></p>
+      <div class="goal-pair two" id="goals"></div>
+    </div>
+
+    <div class="prompt">
+      <p class="q">Keep a copy for yourself</p>
+      <p class="hint" style="margin:0">Download a text file or print and save as a PDF. Both stay on your device. On a shared computer, select Clear everything when you’re done.</p>
+      <div class="actions">
+        <button class="btn" type="button" id="download">Download my answers</button>
+        <button class="btn secondary" type="button" id="print">Print or save as PDF</button>
+        <button class="btn quiet" type="button" id="clear">Clear everything</button>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><strong>If things feel heavy right now,</strong> you don’t have to sort it out alone. Talk with someone you trust, your school counseling or wellness center, or a doctor. If you’re in crisis, contact your local emergency number or a crisis line. In the US, you can call or text 988 any time.</p>
+  <p>Built on the protective factors framework, adapted from the “Protective Factors” worksheet by Therapist Aid (2017). Wording rewritten for students. For learning and self-reflection only; not a clinical or diagnostic tool.</p>
+</footer>
+
+<div id="printout"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var FACTORS = [
+    {
+      id: "social", name: "Social support", short: "Support",
+      blurb: "People who listen, help out, and care about you.",
+      items: [
+        "I have people I can talk to when something is bothering me.",
+        "If I needed practical help, like a ride or a place to stay, I know who I’d ask.",
+        "I feel cared about by friends, family, or a partner."
+      ],
+      ideas: [
+        "Message one person I’ve lost touch with",
+        "Join a club, team, or study group",
+        "Tell someone I trust what’s been on my mind",
+        "Write down three people I could ask for help"
+      ]
+    },
+    {
+      id: "coping", name: "Coping skills", short: "Coping",
+      blurb: "Healthy ways of handling stress and big feelings.",
+      items: [
+        "When I feel stressed, angry, or sad, I have healthy ways to handle it.",
+        "I usually notice what I’m feeling and how it’s affecting what I do."
+      ],
+      ideas: [
+        "Take a 5-minute walk when stress spikes",
+        "Name the feeling before I react",
+        "Keep a short journal before bed",
+        "Practice slow breathing: in for 4, out for 6"
+      ]
+    },
+    {
+      id: "health", name: "Physical health", short: "Health",
+      blurb: "Moving your body, eating well, and looking after your health.",
+      items: [
+        "I get regular exercise or physical activity most weeks.",
+        "I eat reasonably balanced meals most days.",
+        "I look after my health basics, like sleep and following a doctor’s advice or prescriptions if I have any."
+      ],
+      ideas: [
+        "Keep a consistent bedtime on weeknights",
+        "Walk for 20 minutes three days a week",
+        "Pack water and a real snack for long days",
+        "Book a check-up I’ve been putting off"
+      ]
+    },
+    {
+      id: "purpose", name: "Sense of purpose", short: "Purpose",
+      blurb: "Meaningful roles and living by what matters to you.",
+      items: [
+        "I’m involved in something that feels meaningful to me, like school, work, a team, a cause, or caring for someone.",
+        "I know what I value, and my choices mostly line up with it."
+      ],
+      ideas: [
+        "Write down three values that matter most to me",
+        "Volunteer for one event this term",
+        "Link one class to a goal I actually care about",
+        "Ask someone I admire how they found their direction"
+      ]
+    },
+    {
+      id: "esteem", name: "Self-esteem", short: "Self-esteem",
+      blurb: "Seeing yourself as worthwhile and capable.",
+      items: [
+        "I believe I’m a person of worth.",
+        "I can accept my flaws and mistakes without being too hard on myself.",
+        "I believe I can get through difficult things."
+      ],
+      ideas: [
+        "Note one thing I did well each day",
+        "Talk to myself the way I’d talk to a friend",
+        "Notice a mistake without adding an insult",
+        "List hard things I’ve already gotten through"
+      ]
+    },
+    {
+      id: "thinking", name: "Healthy thinking", short: "Thinking",
+      blurb: "Thinking about yourself and problems in a balanced way.",
+      items: [
+        "I don’t get stuck replaying my mistakes or problems over and over.",
+        "I can look at my strengths and weaknesses fairly and realistically."
+      ],
+      ideas: [
+        "Set a 10-minute worry window and park worries until then",
+        "Ask what I’d tell a friend in the same spot",
+        "Write the facts apart from the story I’m telling myself",
+        "Swap “I always mess up” for something specific and fair"
+      ]
+    }
+  ];
+
+  var TOTAL = FACTORS.reduce(function (n, f) { return n + f.items.length; }, 0);
+  var answers = {};            // key "factorId-i" -> 1..5
+  var userPicked = { best: false, g0: false, g1: false };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  };
+
+  /* ---------- Part 1: build rating groups ---------- */
+  var factorsEl = $("factors");
+  FACTORS.forEach(function (f) {
+    var html = '<div class="factor" id="f-' + f.id + '">' +
+      '<div class="factor-head"><h3>' + esc(f.name) + '</h3>' +
+      '<span class="factor-avg" id="avg-' + f.id + '"></span></div>' +
+      '<p class="factor-blurb">' + esc(f.blurb) + '</p>';
+    f.items.forEach(function (text, i) {
+      var key = f.id + "-" + i;
+      html += '<fieldset class="item"><legend>' + esc(text) + '</legend><div class="scale">';
+      for (var v = 1; v <= 5; v++) {
+        html += '<label><input type="radio" name="' + key + '" value="' + v + '" aria-label="' + v + ' of 5"><span class="dot" aria-hidden="true">' + v + '</span></label>';
+      }
+      html += '</div><div class="scale-ends" aria-hidden="true"><span>Not true for me</span><span>Very true for me</span></div></fieldset>';
+    });
+    html += '</div>';
+    factorsEl.insertAdjacentHTML("beforeend", html);
+  });
+
+  factorsEl.addEventListener("change", function (e) {
+    if (e.target && e.target.type === "radio") {
+      answers[e.target.name] = Number(e.target.value);
+      update();
+    }
+  });
+
+  function averages() {
+    return FACTORS.map(function (f) {
+      var vals = f.items.map(function (_, i) { return answers[f.id + "-" + i]; }).filter(Boolean);
+      return {
+        f: f,
+        n: vals.length,
+        avg: vals.length ? vals.reduce(function (a, b) { return a + b; }, 0) / vals.length : null,
+        complete: vals.length === f.items.length
+      };
+    });
+  }
+
+  /* ---------- Hexagon chart ---------- */
+  var svg = $("hex");
+  var NS = "http://www.w3.org/2000/svg";
+  var CX = 200, CY = 165, R = 112;
+  function pt(i, r) {
+    var a = (-90 + i * 60) * Math.PI / 180;
+    return [CX + r * Math.cos(a), CY + r * Math.sin(a)];
+  }
+  function mk(tag, attrs, parent) {
+    var el = document.createElementNS(NS, tag);
+    for (var k in attrs) el.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(el);
+    return el;
+  }
+  for (var lvl = 1; lvl <= 5; lvl++) {
+    var pts = [];
+    for (var i = 0; i < 6; i++) pts.push(pt(i, R * lvl / 5).join(","));
+    mk("polygon", { "class": "ring", points: pts.join(" ") });
+  }
+  for (var s = 0; s < 6; s++) {
+    var e = pt(s, R);
+    mk("line", { "class": "spoke", x1: CX, y1: CY, x2: e[0], y2: e[1] });
+  }
+  var shape = mk("polygon", { "class": "shape", points: Array(7).join(CX + "," + CY + " ").trim() });
+  var dots = [], valLabels = [];
+  FACTORS.forEach(function (f, i) {
+    dots.push(mk("circle", { "class": "pt", cx: CX, cy: CY, r: 0 }));
+    var lp = pt(i, R + 22);
+    var anchor = Math.abs(lp[0] - CX) < 5 ? "middle" : (lp[0] > CX ? "start" : "end");
+    var dy = i === 0 ? -20 : (i === 3 ? 12 : 0);
+    var t = mk("text", { x: lp[0], y: lp[1] + dy, "text-anchor": anchor });
+    t.textContent = f.short;
+    var v = mk("text", { "class": "val", x: lp[0], y: lp[1] + dy + 17, "text-anchor": anchor });
+    valLabels.push(v);
+  });
+
+  /* ---------- Update everything ---------- */
+  function fmt(n) { return (Math.round(n * 10) / 10).toFixed(1); }
+
+  function update() {
+    var answered = Object.keys(answers).length;
+    var avgs = averages();
+    var countText = answered + " of " + TOTAL + " answered";
+    $("count").textContent = countText;
+    $("mp-text").textContent = countText;
+    $("mp-bar").style.width = (answered / TOTAL * 100) + "%";
+
+    var ranked = avgs.filter(function (a) { return a.avg !== null; })
+      .slice().sort(function (a, b) { return b.avg - a.avg; });
+    var topId = ranked.length ? ranked[0].f.id : null;
+
+    var pts = [];
+    avgs.forEach(function (a, i) {
+      var r = a.avg ? R * a.avg / 5 : 0;
+      var p = pt(i, r);
+      pts.push(p.join(","));
+      dots[i].setAttribute("cx", p[0]);
+      dots[i].setAttribute("cy", p[1]);
+      dots[i].setAttribute("r", a.avg ? 5 : 0);
+      dots[i].setAttribute("class", "pt" + (a.f.id === topId && answered === TOTAL ? " top" : ""));
+      valLabels[i].textContent = a.avg ? fmt(a.avg) : "";
+      $("avg-" + a.f.id).textContent = a.complete ? "Average " + fmt(a.avg) + " of 5" : "";
+    });
+    shape.setAttribute("points", pts.join(" "));
+
+    var sum = $("summary");
+    if (answered < TOTAL) {
+      sum.innerHTML = "<p>Your shape fills in as you answer. Each point shows your average for that factor, from 1 at the center to 5 at the edge.</p>" +
+        (answered > 0 ? "<p>Finish all " + TOTAL + " to see your strongest area and where you have the most room to grow.</p>" : "");
+    } else {
+      var top = ranked[0], low = ranked.slice(-2).reverse();
+      sum.innerHTML =
+        '<p class="legend-row"><span class="swatch" style="background:var(--gold)"></span><span><strong>Strongest:</strong> ' + esc(top.f.name) + " (" + fmt(top.avg) + ")</span></p>" +
+        "<p><strong>Most room to grow:</strong> " + esc(low[0].f.name) + " (" + fmt(low[0].avg) + ") and " + esc(low[1].f.name) + " (" + fmt(low[1].avg) + ")</p>" +
+        "<p>Lower areas aren’t failures. They’re the places where a small change could make the biggest difference.</p>";
+    }
+
+    // Suggest selections in Part 2 unless the student already chose
+    if (ranked.length) {
+      if (!userPicked.best) $("best").value = ranked[0].f.id;
+      if (answered === TOTAL) {
+        var lows = ranked.slice(-2).reverse();
+        if (!userPicked.g0) setGoal(0, lows[0].f.id);
+        if (!userPicked.g1) setGoal(1, lows[1].f.id);
+      }
+    }
+  }
+
+  /* ---------- Part 2 ---------- */
+  function optionsHTML(placeholder) {
+    return '<option value="">' + placeholder + '</option>' + FACTORS.map(function (f) {
+      return '<option value="' + f.id + '">' + esc(f.name) + '</option>';
+    }).join("");
+  }
+  $("best").innerHTML = optionsHTML("Choose one");
+  $("best").addEventListener("change", function () { userPicked.best = true; });
+
+  var goalsEl = $("goals");
+  [0, 1].forEach(function (g) {
+    goalsEl.insertAdjacentHTML("beforeend",
+      '<div class="goal" id="goal' + g + '">' +
+        '<h4>Goal ' + (g + 1) + '</h4>' +
+        '<label for="g' + g + '-factor" style="margin-top:0">Factor to strengthen</label>' +
+        '<select id="g' + g + '-factor">' + optionsHTML("Choose a factor") + '</select>' +
+        '<label for="g' + g + '-diff">If this got stronger, what might be different in your life?</label>' +
+        '<textarea id="g' + g + '-diff"></textarea>' +
+        '<label for="g' + g + '-steps">What specific steps could you take?</label>' +
+        '<textarea id="g' + g + '-steps"></textarea>' +
+        '<div class="ideas" id="g' + g + '-ideas"></div>' +
+      '</div>');
+    $("g" + g + "-factor").addEventListener("change", function () {
+      userPicked["g" + g] = true;
+      renderIdeas(g);
+    });
+  });
+
+  function setGoal(g, id) {
+    $("g" + g + "-factor").value = id;
+    renderIdeas(g);
+  }
+
+  function renderIdeas(g) {
+    var id = $("g" + g + "-factor").value;
+    var box = $("g" + g + "-ideas");
+    var f = FACTORS.filter(function (x) { return x.id === id; })[0];
+    if (!f) { box.innerHTML = ""; return; }
+    var steps = $("g" + g + "-steps").value;
+    box.innerHTML = "<p>Need ideas? Select one to add it to your steps.</p><div class=\"chips\">" +
+      f.ideas.map(function (idea) {
+        var on = steps.indexOf(idea) !== -1;
+        return '<button type="button" class="chip" aria-pressed="' + on + '" data-g="' + g + '">' + esc(idea) + '</button>';
+      }).join("") + "</div>";
+  }
+
+  goalsEl.addEventListener("click", function (e) {
+    var chip = e.target.closest(".chip");
+    if (!chip) return;
+    var g = chip.getAttribute("data-g");
+    var ta = $("g" + g + "-steps");
+    var idea = chip.textContent;
+    var line = "• " + idea;
+    if (chip.getAttribute("aria-pressed") === "true") {
+      ta.value = ta.value.split("\n").filter(function (l) { return l.trim() !== line; }).join("\n");
+      chip.setAttribute("aria-pressed", "false");
+    } else {
+      ta.value = (ta.value.trim() ? ta.value.replace(/\s+$/, "") + "\n" : "") + line;
+      chip.setAttribute("aria-pressed", "true");
+    }
+  });
+
+  /* ---------- Save / print / clear ---------- */
+  function nameOf(id) {
+    var f = FACTORS.filter(function (x) { return x.id === id; })[0];
+    return f ? f.name : "(not chosen)";
+  }
+
+  function buildText() {
+    var avgs = averages();
+    var lines = [];
+    lines.push("WHAT KEEPS YOU STEADY? Protective factors self-check");
+    lines.push("Saved " + new Date().toLocaleDateString());
+    lines.push("");
+    lines.push("PART 1: RATINGS (1 = not true for me, 5 = very true for me)");
+    avgs.forEach(function (a) {
+      lines.push("");
+      lines.push(a.f.name + (a.avg ? "  Average: " + fmt(a.avg) : "  Not finished"));
+      a.f.items.forEach(function (t, i) {
+        var v = answers[a.f.id + "-" + i];
+        lines.push("  [" + (v || "-") + "] " + t);
+      });
+    });
+    lines.push("");
+    lines.push("PART 2: REFLECTION");
+    lines.push("");
+    lines.push("Most helpful factor in hard times: " + nameOf($("best").value));
+    lines.push("How I’ve used it:");
+    lines.push($("best-how").value.trim() || "(blank)");
+    [0, 1].forEach(function (g) {
+      lines.push("");
+      lines.push("Goal " + (g + 1) + ": strengthen " + nameOf($("g" + g + "-factor").value));
+      lines.push("What might be different:");
+      lines.push($("g" + g + "-diff").value.trim() || "(blank)");
+      lines.push("Steps I could take:");
+      lines.push($("g" + g + "-steps").value.trim() || "(blank)");
+    });
+    lines.push("");
+    lines.push("This is a reflection tool, not a test or a diagnosis.");
+    return lines.join("\n");
+  }
+
+  $("download").addEventListener("click", function () {
+    var blob = new Blob([buildText()], { type: "text/plain;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "protective-factors-reflection.txt";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    $("status").textContent = "Downloaded protective-factors-reflection.txt to your device.";
+  });
+
+  function buildPrintout() {
+    var avgs = averages();
+    var h = "<h1>What keeps you steady?</h1><p>Protective factors self-check, " + esc(new Date().toLocaleDateString()) + "</p>";
+    h += "<h2>Part 1: Average rating by factor (1 to 5)</h2><table><tr><th>Factor</th><th>Average</th></tr>";
+    avgs.forEach(function (a) { h += "<tr><td>" + esc(a.f.name) + "</td><td>" + (a.avg ? fmt(a.avg) : "Not finished") + "</td></tr>"; });
+    h += "</table>";
+    h += "<h2>Part 2: Reflection</h2>";
+    h += "<p><strong>Most helpful factor in hard times:</strong> " + esc(nameOf($("best").value)) + "</p>";
+    h += "<p><strong>How I’ve used it:</strong></p><p class=\"ans\">" + esc($("best-how").value.trim() || "(blank)") + "</p>";
+    [0, 1].forEach(function (g) {
+      h += "<h2>Goal " + (g + 1) + ": " + esc(nameOf($("g" + g + "-factor").value)) + "</h2>";
+      h += "<p><strong>What might be different:</strong></p><p class=\"ans\">" + esc($("g" + g + "-diff").value.trim() || "(blank)") + "</p>";
+      h += "<p><strong>Steps I could take:</strong></p><p class=\"ans\">" + esc($("g" + g + "-steps").value.trim() || "(blank)") + "</p>";
+    });
+    h += "<p style=\"margin-top:14pt\"><em>A reflection tool, not a test or a diagnosis.</em></p>";
+    $("printout").innerHTML = h;
+  }
+  window.addEventListener("beforeprint", buildPrintout);
+  $("print").addEventListener("click", function () { buildPrintout(); window.print(); });
+
+  $("clear").addEventListener("click", function () {
+    if (!window.confirm("Clear all your ratings and writing from this page?")) return;
+    answers = {};
+    userPicked = { best: false, g0: false, g1: false };
+    document.querySelectorAll('#factors input[type="radio"]').forEach(function (r) { r.checked = false; });
+    document.querySelectorAll("textarea").forEach(function (t) { t.value = ""; });
+    document.querySelectorAll("select").forEach(function (s) { s.value = ""; });
+    $("g0-ideas").innerHTML = ""; $("g1-ideas").innerHTML = "";
+    $("printout").innerHTML = "";
+    update();
+    $("status").textContent = "Cleared. Nothing from this session remains on the page.";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  // Warn before leaving if there's unsaved work (nothing is stored)
+  window.addEventListener("beforeunload", function (e) {
+    var hasText = Array.prototype.some.call(document.querySelectorAll("textarea"), function (t) { return t.value.trim(); });
+    if (Object.keys(answers).length || hasText) { e.preventDefault(); e.returnValue = ""; }
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
