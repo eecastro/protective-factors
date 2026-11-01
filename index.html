@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>What keeps you steady? A protective factors self-check</title>
-<meta name="description" content="An anonymous self-reflection on the protective factors that support mental health. Nothing you enter leaves your device.">
+<meta name="description" content="An anonymous self-reflection on the protective factors that support mental health, with anonymous class averages.">
+<meta name="author" content="Eric E Castro, Psychology Department, St Ignatius College Prep">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -332,6 +333,7 @@ footer strong { color: var(--ink); }
 
 <footer class="wrap">
   <p><strong>If things feel heavy right now,</strong> you don’t have to sort it out alone. Talk with someone you trust, your school counseling or wellness center, or a doctor. If you’re in crisis, contact your local emergency number or a crisis line. In the US, you can call or text 988 any time.</p>
+  <p><strong>Developed by Eric E Castro, Psychology Department, St Ignatius College Prep.</strong></p>
   <p>Built on the protective factors framework, adapted from the “Protective Factors” worksheet by Therapist Aid (2017). Wording rewritten for students. Comparison figures come from the CDC Youth Risk Behavior Survey (2023) and Gallup (2025). For learning and self-reflection only; not a clinical or diagnostic tool.</p>
   <p class="share-only">Class averages come from the anonymous results of students in this course and appear only after at least 5 have taken part.</p>
 </footer>
@@ -832,6 +834,7 @@ footer strong { color: var(--ink); }
     });
     lines.push("");
     lines.push("This is a reflection tool, not a test or a diagnosis.");
+    lines.push("Developed by Eric E Castro, Psychology Department, St Ignatius College Prep.");
     return lines.join("\n");
   }
 
@@ -861,7 +864,8 @@ footer strong { color: var(--ink); }
         pctLabel(pq) + " of " + esc(pq.who) + " " + esc(pq.groupLabel) + " (" + esc(pq.source) + ")</td></tr>";
     });
     h += "</table>";
-    h += "<p style=\"margin-top:14pt\"><em>A reflection tool, not a test or a diagnosis.</em></p>";
+    h += "<p style=\"margin-top:14pt\"><em>A reflection tool, not a test or a diagnosis.</em></p>" +
+      "<p><em>Developed by Eric E Castro, Psychology Department, St Ignatius College Prep.</em></p>";
     $("printout").innerHTML = h;
   }
   window.addEventListener("beforeprint", buildPrintout);
