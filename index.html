@@ -182,41 +182,49 @@ fieldset.item legend + * { clear: both; }
 .swatch { width: 0.8rem; height: 0.8rem; border-radius: 50%; flex: none; }
 .not-a-test { font-size: 0.88rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 0.9rem; }
 
-/* Reflection */
+/* Panels */
 .prompt { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.25rem; }
-.prompt > label, .prompt .q { display: block; margin-top: 0; font-weight: 700; margin-bottom: 0.6rem; max-width: 60ch; }
+.prompt .q { display: block; margin: 0 0 0.6rem; font-weight: 700; max-width: 60ch; }
 .prompt .hint { display: block; font-weight: 400; color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
-select, textarea {
-  font: inherit;
-  color: var(--ink);
-  background: var(--bg);
-  border: 2px solid var(--line);
-  border-radius: 10px;
-  padding: 0.65rem 0.8rem;
-  width: 100%;
+
+/* Peer comparison */
+.peer { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.25rem; }
+.peer fieldset { border: 0; margin: 0; padding: 0; }
+.peer legend { font-weight: 700; padding: 0; margin-bottom: 0.25rem; max-width: 60ch; }
+.peer .factor-label { font-size: 0.9rem; color: var(--accent); margin: 0 0 0.35rem; font-family: var(--display); font-weight: 500; }
+.choices { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.choices label { position: relative; cursor: pointer; }
+.choices input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.choices span {
+  display: inline-block; padding: 0.5rem 0.95rem;
+  border: 2px solid var(--line); border-radius: 999px;
+  background: var(--bg); color: var(--ink); font-size: 0.95rem;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-select { max-width: 340px; cursor: pointer; }
-textarea { min-height: 6.5rem; resize: vertical; line-height: 1.5; }
-select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; border-color: transparent; }
-.goal-pair { display: grid; gap: 1.25rem; }
-.goal { border-top: 1px solid var(--line); padding-top: 1.1rem; margin-top: 1.1rem; }
-.goal h4 { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin: 0 0 0.75rem; }
-.goal label { display: block; font-weight: 700; margin: 0.9rem 0 0.4rem; }
-.ideas { margin-top: 0.6rem; }
-.ideas p { margin: 0 0 0.4rem; font-size: 0.9rem; color: var(--muted); }
-.chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.chip {
-  font: inherit; font-size: 0.88rem;
-  background: transparent;
-  color: var(--ink);
-  border: 1.5px solid var(--line);
-  border-radius: 999px;
-  padding: 0.3rem 0.75rem;
-  cursor: pointer;
-  text-align: left;
-}
-.chip:hover { border-color: var(--accent); }
-.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.choices label:hover span { border-color: var(--accent); }
+.choices input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 700; }
+.choices input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+.compare { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--line); }
+.compare[hidden] { display: none; }
+.compare .meter-lbl { margin: 0 0 0.4rem; font-weight: 700; font-size: 0.95rem; }
+.meter { position: relative; height: 0.9rem; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.meter .fill { position: absolute; inset: 0 auto 0 0; background: var(--accent-soft); border-right: 2px solid var(--accent); transition: width 0.5s cubic-bezier(.2,.8,.2,1); }
+.you { display: inline-block; margin: 0.75rem 0 0.25rem; padding: 0.2rem 0.7rem; border-radius: 999px; font-size: 0.9rem; font-weight: 700; background: var(--gold-soft); color: var(--ink); border: 1.5px solid var(--gold); }
+.compare p { margin: 0.5rem 0 0; max-width: 62ch; }
+.source { font-size: 0.85rem; color: var(--muted); }
+.ideas-list { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+.ideas-list li { margin: 0.15rem 0; }
+
+/* Class overlay */
+#hex .class-shape { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 6 5; stroke-linejoin: round; transition: all 0.45s cubic-bezier(.2,.8,.2,1); }
+.hex-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; font-size: 0.9rem; color: var(--muted); margin: 0 0 0.5rem; }
+.hex-legend[hidden] { display: none; }
+.hex-legend .key { display: inline-block; width: 1.4rem; height: 0; border-top: 3px solid var(--accent); }
+.hex-legend .class-key { border-top: 2px dashed var(--muted); }
+.hex-legend .li { display: inline-flex; align-items: center; gap: 0.4rem; margin-right: 0.8rem; }
+.class-line { font-size: 0.95rem; color: var(--muted); }
+.no-share .share-only { display: none !important; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; filter: none; }
 
 /* Actions */
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
@@ -253,7 +261,6 @@ footer strong { color: var(--ink); }
   #printout p, #printout li { margin: 0 0 4pt; }
   #printout table { border-collapse: collapse; width: 100%; margin-top: 6pt; }
   #printout td, #printout th { border: 1px solid #999; padding: 4pt 6pt; text-align: left; }
-  #printout .ans { white-space: pre-wrap; border-left: 2px solid #999; padding-left: 8pt; }
 }
 </style>
 </head>
@@ -263,10 +270,10 @@ footer strong { color: var(--ink); }
   <h1>What keeps you steady?</h1>
   <p class="lede">Protective factors are the relationships, habits, and ways of thinking that support your mental health and help you recover when life gets hard. The more of them you have, the better prepared you are for setbacks.</p>
   <p>Some protective factors aren’t up to you, like your genes, your family, or where you grew up. Plenty of others are: who you spend time with, how you handle stress, and what you do with your days. This self-check helps you notice where you’re already strong and choose what to build next.</p>
-  <p>It takes about 10 minutes. Part 1 is 15 quick ratings. Part 2 is a short written reflection.</p>
+  <p>It takes about 7 minutes. Part 1 is 15 quick ratings. Part 2 asks four questions taken from national surveys, so you can see how your answers compare with other people your age.</p>
   <div class="privacy" role="note">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-    <p><strong>This page is anonymous.</strong> It doesn’t ask for your name, and nothing you enter is sent or saved anywhere. Your answers exist only in this browser tab and disappear when you close it. You decide whether to save or print a copy.</p>
+    <p><strong>This page is anonymous.</strong> It never asks for your name. <span class="share-only">When you finish Part 1, your six factor scores and any Part 2 answers are saved automatically to your class’s anonymous results, along with the date. No name, email, time of day, or device details are saved. This is the anonymous data collection you and your parents agreed to for this course. </span>Your individual ratings, and anything you download or print, stay on this device.</p>
   </div>
 </header>
 
@@ -287,9 +294,10 @@ footer strong { color: var(--ink); }
     <div class="card">
       <h2 id="profile-title">Your profile</h2>
       <p class="count" id="count" aria-live="polite">0 of 15 answered</p>
-      <svg id="hex" viewBox="0 0 400 330" role="img" aria-labelledby="hex-desc">
+      <svg id="hex" viewBox="0 0 430 330" role="img" aria-labelledby="hex-desc">
         <desc id="hex-desc">A six-sided chart of your average rating in each protective factor, from 1 to 5.</desc>
       </svg>
+      <p class="hex-legend" id="hex-legend" hidden><span class="li"><span class="key you-key"></span>You</span><span class="li"><span class="key class-key"></span><span id="class-legend-text">Class average</span></span></p>
       <div class="summary" id="summary" aria-live="polite">
         <p>Your shape fills in as you answer. Each point shows your average for that factor, from 1 at the center to 5 at the edge.</p>
       </div>
@@ -299,29 +307,21 @@ footer strong { color: var(--ink); }
 
   <section id="part2" aria-labelledby="p2-title">
     <p class="part-tag">Part 2</p>
-    <h2 id="p2-title">Reflect and plan</h2>
-    <p class="section-note">Use your profile to answer these. Write as much or as little as you like. Your words stay on this device.</p>
+    <h2 id="p2-title">How you compare</h2>
+    <p class="section-note">These four questions come from large national surveys of teens and young adults. Answer one and you’ll see how people your age answered the same question. The figures describe groups, not what’s right for you.</p>
+    <div id="peers"></div>
 
-    <div class="prompt">
-      <label for="best">Which protective factor has helped you most during difficult times?
-        <span class="hint">We’ve suggested your highest-rated one, but pick whichever feels truest.</span></label>
-      <select id="best"></select>
-      <label for="best-how" style="margin-top:1.1rem">How exactly have you used it to get through something before?
-        <span class="hint">Think of one specific moment. What did you do, and how did it help?</span></label>
-      <textarea id="best-how"></textarea>
-    </div>
-
-    <div class="prompt">
-      <p class="q">Which two protective factors would you like to strengthen?
-        <span class="hint">We’ve suggested your two lowest-rated ones. Change them if something else matters more to you.</span></p>
-      <div class="goal-pair two" id="goals"></div>
+    <div class="prompt share-only" id="share-panel">
+      <p class="q">Your class’s results</p>
+      <p class="hint" style="margin:0">Your scores are saved anonymously as soon as you finish Part 1, and updated if you change an answer. Class averages appear once at least 5 students have taken part, so no one’s answers can be picked out.</p>
+      <p class="status" id="share-status" aria-live="polite">Finish all 15 ratings in Part 1 to add your scores to the class results.</p>
     </div>
 
     <div class="prompt">
       <p class="q">Keep a copy for yourself</p>
       <p class="hint" style="margin:0">Download a text file or print and save as a PDF. Both stay on your device. On a shared computer, select Clear everything when you’re done.</p>
       <div class="actions">
-        <button class="btn" type="button" id="download">Download my answers</button>
+        <button class="btn" type="button" id="download">Download my results</button>
         <button class="btn secondary" type="button" id="print">Print or save as PDF</button>
         <button class="btn quiet" type="button" id="clear">Clear everything</button>
       </div>
@@ -332,7 +332,8 @@ footer strong { color: var(--ink); }
 
 <footer class="wrap">
   <p><strong>If things feel heavy right now,</strong> you don’t have to sort it out alone. Talk with someone you trust, your school counseling or wellness center, or a doctor. If you’re in crisis, contact your local emergency number or a crisis line. In the US, you can call or text 988 any time.</p>
-  <p>Built on the protective factors framework, adapted from the “Protective Factors” worksheet by Therapist Aid (2017). Wording rewritten for students. For learning and self-reflection only; not a clinical or diagnostic tool.</p>
+  <p>Built on the protective factors framework, adapted from the “Protective Factors” worksheet by Therapist Aid (2017). Wording rewritten for students. Comparison figures come from the CDC Youth Risk Behavior Survey (2023) and Gallup (2025). For learning and self-reflection only; not a clinical or diagnostic tool.</p>
+  <p class="share-only">Class averages come from the anonymous results of students in this course and appear only after at least 5 have taken part.</p>
 </footer>
 
 <div id="printout"></div>
@@ -340,6 +341,20 @@ footer strong { color: var(--ink); }
 <script>
 (function () {
   "use strict";
+
+  /* ================= CONFIGURATION =================
+     Paste your Google Apps Script web app URL between the quotes.
+     Leave it empty to run the page with no sharing at all.            */
+  var SHEET_URL = "https://script.google.com/macros/s/AKfycbw2g5TaLi1SL6bX_3zKAYZ0lyvlFL2LkfVYPN8mmxu1MMxPJvLXaQt1C40GuxkdXDwrmQ/exec";
+  var MIN_CLASS_N = 5;   // hide class averages until this many students have taken part
+  var PAGE_VERSION = "2026.1";
+  /* ================================================ */
+
+  var SHARING = /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(SHEET_URL);
+  if (!SHARING) document.documentElement.classList.add("no-share");
+  // Optional section code from the link, e.g. ...github.io/protective-factors/?section=P3
+  var SECTION = (new URLSearchParams(location.search).get("section") || "").replace(/[^A-Za-z0-9 \-]/g, "").slice(0, 20);
+  var classStats = null;   // filled from the Sheet
 
   var FACTORS = [
     {
@@ -433,7 +448,7 @@ footer strong { color: var(--ink); }
 
   var TOTAL = FACTORS.reduce(function (n, f) { return n + f.items.length; }, 0);
   var answers = {};            // key "factorId-i" -> 1..5
-  var userPicked = { best: false, g0: false, g1: false };
+  var peerAnswers = {};        // peer id -> option index
 
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) {
@@ -465,6 +480,7 @@ footer strong { color: var(--ink); }
     if (e.target && e.target.type === "radio") {
       answers[e.target.name] = Number(e.target.value);
       update();
+      scheduleSave();
     }
   });
 
@@ -483,7 +499,7 @@ footer strong { color: var(--ink); }
   /* ---------- Hexagon chart ---------- */
   var svg = $("hex");
   var NS = "http://www.w3.org/2000/svg";
-  var CX = 200, CY = 165, R = 112;
+  var CX = 215, CY = 165, R = 108;
   function pt(i, r) {
     var a = (-90 + i * 60) * Math.PI / 180;
     return [CX + r * Math.cos(a), CY + r * Math.sin(a)];
@@ -503,6 +519,7 @@ footer strong { color: var(--ink); }
     var e = pt(s, R);
     mk("line", { "class": "spoke", x1: CX, y1: CY, x2: e[0], y2: e[1] });
   }
+  var classShape = mk("polygon", { "class": "class-shape", points: "" });
   var shape = mk("polygon", { "class": "shape", points: Array(7).join(CX + "," + CY + " ").trim() });
   var dots = [], valLabels = [];
   FACTORS.forEach(function (f, i) {
@@ -541,9 +558,13 @@ footer strong { color: var(--ink); }
       dots[i].setAttribute("r", a.avg ? 5 : 0);
       dots[i].setAttribute("class", "pt" + (a.f.id === topId && answered === TOTAL ? " top" : ""));
       valLabels[i].textContent = a.avg ? fmt(a.avg) : "";
-      $("avg-" + a.f.id).textContent = a.complete ? "Average " + fmt(a.avg) + " of 5" : "";
+      var cls = classFactor(a.f.id);
+      $("avg-" + a.f.id).textContent = a.complete
+        ? "Average " + fmt(a.avg) + " of 5" + (cls !== null ? " (class: " + fmt(cls) + ")" : "")
+        : "";
     });
     shape.setAttribute("points", pts.join(" "));
+    renderClassShape();
 
     var sum = $("summary");
     if (answered < TOTAL) {
@@ -554,88 +575,237 @@ footer strong { color: var(--ink); }
       sum.innerHTML =
         '<p class="legend-row"><span class="swatch" style="background:var(--gold)"></span><span><strong>Strongest:</strong> ' + esc(top.f.name) + " (" + fmt(top.avg) + ")</span></p>" +
         "<p><strong>Most room to grow:</strong> " + esc(low[0].f.name) + " (" + fmt(low[0].avg) + ") and " + esc(low[1].f.name) + " (" + fmt(low[1].avg) + ")</p>" +
-        "<p>Lower areas aren’t failures. They’re the places where a small change could make the biggest difference.</p>";
-    }
-
-    // Suggest selections in Part 2 unless the student already chose
-    if (ranked.length) {
-      if (!userPicked.best) $("best").value = ranked[0].f.id;
-      if (answered === TOTAL) {
-        var lows = ranked.slice(-2).reverse();
-        if (!userPicked.g0) setGoal(0, lows[0].f.id);
-        if (!userPicked.g1) setGoal(1, lows[1].f.id);
-      }
+        "<p>Lower areas aren’t failures. They’re the places where a small change could make the biggest difference. A few ideas:</p>" +
+        '<ul class="ideas-list">' + low.map(function (a) {
+          return "<li>" + esc(a.f.ideas[0]) + "</li><li>" + esc(a.f.ideas[1]) + "</li>";
+        }).join("") + "</ul>";
     }
   }
 
-  /* ---------- Part 2 ---------- */
-  function optionsHTML(placeholder) {
-    return '<option value="">' + placeholder + '</option>' + FACTORS.map(function (f) {
-      return '<option value="' + f.id + '">' + esc(f.name) + '</option>';
-    }).join("");
-  }
-  $("best").innerHTML = optionsHTML("Choose one");
-  $("best").addEventListener("change", function () { userPicked.best = true; });
+  /* ---------- Part 2: peer comparison ---------- */
+  // Questions mirror national survey items so the comparison is like for like.
+  var PEERS = [
+    {
+      id: "school", factor: "Social support",
+      q: "Do you agree or disagree that you feel close to people at your school?",
+      options: ["Strongly agree", "Agree", "Not sure", "Disagree", "Strongly disagree"],
+      inGroup: function (i) { return i <= 1; },
+      pct: 50, pctText: "About half", groupLabel: "felt close to people at school",
+      who: "US high school students",
+      inMsg: "You’re in the group that feels close to people at school. Feeling connected at school is one of the strongest protective factors researchers have found.",
+      outMsg: "About half of US high school students don’t feel close to people at school either, so you’re far from alone. Joining one club, team, or study group is a small step that often helps.",
+      source: "CDC Youth Risk Behavior Survey, 2023",
+      url: "https://www.cdc.gov/yrbs/dstr/index.html"
+    },
+    {
+      id: "active", factor: "Physical health",
+      q: "During the past 7 days, on how many days were you physically active for a total of at least 60 minutes?",
+      options: ["0 days", "1", "2", "3", "4", "5", "6", "7 days"],
+      inGroup: function (i) { return i >= 5; },
+      pct: 46, groupLabel: "were active 5 or more days",
+      who: "US high school students",
+      inMsg: "You’re active on 5 or more days, like just under half of US high school students. The guideline for teens is 60 minutes every day, which only about 1 in 4 students meet.",
+      outMsg: "Just under half of US high school students reach 5 or more active days, and activity tends to drop by senior year. Walking counts, so a daily 20-minute walk adds up quickly.",
+      source: "CDC Youth Risk Behavior Survey, 2023",
+      url: "https://www.cdc.gov/yrbs/dstr/dietary-physical-sleep-behaviors.html"
+    },
+    {
+      id: "sleep", factor: "Physical health",
+      q: "On an average school night, how many hours of sleep do you get?",
+      options: ["4 or less", "5", "6", "7", "8", "9", "10 or more"],
+      inGroup: function (i) { return i >= 4; },
+      pct: 23, groupLabel: "got 8 or more hours",
+      who: "US high school students",
+      inMsg: "You get 8 or more hours, which puts you ahead of about 3 in 4 US high school students. Sleep experts recommend 8 to 10 hours at your age.",
+      outMsg: "Only about 1 in 4 US high school students get 8 or more hours on a school night, so most of your peers are short on sleep too. Sleep experts recommend 8 to 10 hours at your age.",
+      source: "CDC Youth Risk Behavior Survey, 2023",
+      url: "https://www.cdc.gov/yrbs/dstr/dietary-physical-sleep-behaviors.html"
+    },
+    {
+      id: "lonely", factor: "Social support",
+      q: "Did you feel lonely for a lot of the day yesterday?",
+      options: ["Yes", "No"],
+      inGroup: function (i) { return i === 0; },
+      pct: 29, groupLabel: "said yes",
+      who: "US adults ages 18 to 29",
+      inMsg: "You’re not alone: nearly 3 in 10 young adults said the same, more than any other age group. Loneliness is common during big transitions like the end of high school and usually eases as new connections form.",
+      outMsg: "Nearly 3 in 10 young adults said yes, more than any other age group, so it’s worth checking in on friends too.",
+      source: "Gallup National Health and Well-Being Index, 2025",
+      url: ""
+    }
+  ];
 
-  var goalsEl = $("goals");
-  [0, 1].forEach(function (g) {
-    goalsEl.insertAdjacentHTML("beforeend",
-      '<div class="goal" id="goal' + g + '">' +
-        '<h4>Goal ' + (g + 1) + '</h4>' +
-        '<label for="g' + g + '-factor" style="margin-top:0">Factor to strengthen</label>' +
-        '<select id="g' + g + '-factor">' + optionsHTML("Choose a factor") + '</select>' +
-        '<label for="g' + g + '-diff">If this got stronger, what might be different in your life?</label>' +
-        '<textarea id="g' + g + '-diff"></textarea>' +
-        '<label for="g' + g + '-steps">What specific steps could you take?</label>' +
-        '<textarea id="g' + g + '-steps"></textarea>' +
-        '<div class="ideas" id="g' + g + '-ideas"></div>' +
-      '</div>');
-    $("g" + g + "-factor").addEventListener("change", function () {
-      userPicked["g" + g] = true;
-      renderIdeas(g);
+  function pctLabel(pq) { return pq.pctText || (pq.pct + "%"); }
+
+  var peersEl = $("peers");
+  PEERS.forEach(function (pq) {
+    var html = '<div class="peer" id="peer-' + pq.id + '"><p class="factor-label">' + esc(pq.factor) + '</p><fieldset>' +
+      '<legend>' + esc(pq.q) + '</legend><div class="choices">';
+    pq.options.forEach(function (o, i) {
+      html += '<label><input type="radio" name="peer-' + pq.id + '" value="' + i + '"><span>' + esc(o) + '</span></label>';
     });
+    html += '</div></fieldset>' +
+      '<div class="compare" id="cmp-' + pq.id + '" hidden aria-live="polite">' +
+        '<p class="meter-lbl">' + pctLabel(pq) + ' of ' + esc(pq.who) + ' ' + esc(pq.groupLabel) + '</p>' +
+        '<div class="meter" aria-hidden="true"><span class="fill" style="width:0%"></span></div>' +
+        '<span class="you"></span>' +
+        '<p class="class-line share-only"></p>' +
+        '<p class="msg"></p>' +
+        '<p class="source">Source: ' + (pq.url ? '<a href="' + pq.url + '" target="_blank" rel="noopener">' + esc(pq.source) + '</a>' : esc(pq.source)) + '</p>' +
+      '</div></div>';
+    peersEl.insertAdjacentHTML("beforeend", html);
   });
 
-  function setGoal(g, id) {
-    $("g" + g + "-factor").value = id;
-    renderIdeas(g);
+  peersEl.addEventListener("change", function (e) {
+    if (!e.target || e.target.type !== "radio") return;
+    var id = e.target.name.replace("peer-", "");
+    peerAnswers[id] = Number(e.target.value);
+    renderPeer(id);
+    scheduleSave();
+  });
+
+  function peerById(id) { return PEERS.filter(function (x) { return x.id === id; })[0]; }
+
+  function renderPeer(id) {
+    var pq = peerById(id), box = $("cmp-" + id), i = peerAnswers[id];
+    if (i === undefined) { box.hidden = true; return; }
+    var inG = pq.inGroup(i);
+    box.hidden = false;
+    box.querySelector(".you").textContent = "You: " + pq.options[i] + (inG ? " (in this group)" : " (not in this group)");
+    box.querySelector(".msg").textContent = inG ? pq.inMsg : pq.outMsg;
+    var fill = box.querySelector(".fill");
+    requestAnimationFrame(function () { fill.style.width = pq.pct + "%"; });
+    renderPeerClass(pq);
   }
 
-  function renderIdeas(g) {
-    var id = $("g" + g + "-factor").value;
-    var box = $("g" + g + "-ideas");
-    var f = FACTORS.filter(function (x) { return x.id === id; })[0];
-    if (!f) { box.innerHTML = ""; return; }
-    var steps = $("g" + g + "-steps").value;
-    box.innerHTML = "<p>Need ideas? Select one to add it to your steps.</p><div class=\"chips\">" +
-      f.ideas.map(function (idea) {
-        var on = steps.indexOf(idea) !== -1;
-        return '<button type="button" class="chip" aria-pressed="' + on + '" data-g="' + g + '">' + esc(idea) + '</button>';
-      }).join("") + "</div>";
+  /* ---------- Class averages from the Google Sheet ---------- */
+  // Which stats key in the Sheet summary matches each Part 2 question
+  var PEER_KEY = { school: "close", active: "active5", sleep: "sleep8", lonely: "lonely" };
+  var SLEEP_HOURS = [4, 5, 6, 7, 8, 9, 10];
+
+  function activeClass() {
+    if (!classStats) return null;
+    if (classStats.thisYear && classStats.thisYear.n >= MIN_CLASS_N) return { s: classStats.thisYear, label: classStats.currentYear };
+    if (classStats.allTime && classStats.allTime.n >= MIN_CLASS_N) return { s: classStats.allTime, label: "all years" };
+    return null;
+  }
+  function classFactor(id) {
+    var c = activeClass();
+    return c && c.s.factors && typeof c.s.factors[id] === "number" ? c.s.factors[id] : null;
+  }
+  function renderClassShape() {
+    var c = activeClass();
+    if (!c) { classShape.setAttribute("points", ""); $("hex-legend").hidden = true; return; }
+    var pts = FACTORS.map(function (f, i) { return pt(i, R * (c.s.factors[f.id] || 0) / 5).join(","); });
+    classShape.setAttribute("points", pts.join(" "));
+    $("hex-legend").hidden = false;
+    $("class-legend-text").textContent = "Class average, " + c.label + " (" + c.s.n + " students)";
+  }
+  function renderPeerClass(pq) {
+    var line = $("cmp-" + pq.id).querySelector(".class-line");
+    if (!SHARING) return;
+    var c = activeClass();
+    var st = c && c.s.peers ? c.s.peers[PEER_KEY[pq.id]] : null;
+    line.textContent = st && st.n >= MIN_CLASS_N
+      ? "Your class (" + c.label + "): " + Math.round(st.pct) + "% " + pq.groupLabel + " (" + st.n + " students)"
+      : "Your class’s figure appears once at least " + MIN_CLASS_N + " students have taken part.";
+  }
+  function loadClassStats() {
+    if (!SHARING) return;
+    fetch(SHEET_URL + "?t=" + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (!data || !data.ok) return;
+        classStats = data;
+        update();
+        PEERS.forEach(function (pq) { if (peerAnswers[pq.id] !== undefined) renderPeerClass(pq); });
+      })
+      .catch(function () { /* class averages are optional; the page works without them */ });
   }
 
-  goalsEl.addEventListener("click", function (e) {
-    var chip = e.target.closest(".chip");
-    if (!chip) return;
-    var g = chip.getAttribute("data-g");
-    var ta = $("g" + g + "-steps");
-    var idea = chip.textContent;
-    var line = "• " + idea;
-    if (chip.getAttribute("aria-pressed") === "true") {
-      ta.value = ta.value.split("\n").filter(function (l) { return l.trim() !== line; }).join("\n");
-      chip.setAttribute("aria-pressed", "false");
-    } else {
-      ta.value = (ta.value.trim() ? ta.value.replace(/\s+$/, "") + "\n" : "") + line;
-      chip.setAttribute("aria-pressed", "true");
+  /* ---------- Automatic anonymous saving ---------- */
+  // A random ID lets later changes update the same row instead of adding a new one.
+  // It's kept only for this tab (sessionStorage), so it can't follow a student or a device.
+  function newId() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+  }
+  function getSubId(reset) {
+    var id = null;
+    try { if (!reset) id = sessionStorage.getItem("pf-sub-id"); } catch (e) {}
+    if (!id) {
+      id = newId();
+      try { sessionStorage.setItem("pf-sub-id", id); } catch (e) {}
     }
-  });
+    return id;
+  }
+  var SUB_ID = getSubId(false);
+  var saveTimer = null, dirty = false, everSaved = false;
+
+  function buildPayload() {
+    var factors = {};
+    averages().forEach(function (a) { factors[a.f.id] = Math.round(a.avg * 100) / 100; });
+    var pa = peerAnswers;
+    return {
+      id: SUB_ID,
+      v: PAGE_VERSION,
+      section: SECTION,
+      factors: factors,
+      peers: {
+        close: pa.school === undefined ? null : (pa.school <= 1 ? 1 : 0),
+        active: pa.active === undefined ? null : pa.active,
+        sleep: pa.sleep === undefined ? null : SLEEP_HOURS[pa.sleep],
+        lonely: pa.lonely === undefined ? null : (pa.lonely === 0 ? 1 : 0)
+      }
+    };
+  }
+
+  function readyToSave() { return SHARING && Object.keys(answers).length === TOTAL; }
+
+  // Wait until the student pauses, so rapid clicks become one save
+  function scheduleSave() {
+    if (!readyToSave()) return;
+    dirty = true;
+    $("share-status").textContent = "Saving your anonymous scores…";
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 2500);
+  }
+
+  function saveNow() {
+    if (!readyToSave() || !dirty) return;
+    clearTimeout(saveTimer);
+    dirty = false;
+    // text/plain + no-cors avoids a CORS preflight, which Apps Script can’t answer
+    fetch(SHEET_URL, {
+      method: "POST",
+      mode: "no-cors",
+      keepalive: true,
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(buildPayload())
+    }).then(function () {
+      everSaved = true;
+      if (!dirty) $("share-status").textContent = "Saved anonymously to your class’s results.";
+      setTimeout(loadClassStats, 2000);
+    }).catch(function () {
+      dirty = true;
+      $("share-status").textContent = "Couldn’t reach the class results. Your scores will be saved when the connection is back.";
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveNow, 15000);
+    });
+  }
+
+  // If the student closes or leaves the tab before the pause ends, send what's pending
+  function flushOnLeave() {
+    if (!readyToSave() || !dirty) return;
+    dirty = false;
+    clearTimeout(saveTimer);
+    var body = new Blob([JSON.stringify(buildPayload())], { type: "text/plain;charset=utf-8" });
+    if (!(navigator.sendBeacon && navigator.sendBeacon(SHEET_URL, body))) saveNow();
+  }
+  window.addEventListener("pagehide", flushOnLeave);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flushOnLeave(); });
 
   /* ---------- Save / print / clear ---------- */
-  function nameOf(id) {
-    var f = FACTORS.filter(function (x) { return x.id === id; })[0];
-    return f ? f.name : "(not chosen)";
-  }
-
   function buildText() {
     var avgs = averages();
     var lines = [];
@@ -652,18 +822,13 @@ footer strong { color: var(--ink); }
       });
     });
     lines.push("");
-    lines.push("PART 2: REFLECTION");
-    lines.push("");
-    lines.push("Most helpful factor in hard times: " + nameOf($("best").value));
-    lines.push("How I’ve used it:");
-    lines.push($("best-how").value.trim() || "(blank)");
-    [0, 1].forEach(function (g) {
+    lines.push("PART 2: HOW YOU COMPARE");
+    PEERS.forEach(function (pq) {
+      var i = peerAnswers[pq.id];
       lines.push("");
-      lines.push("Goal " + (g + 1) + ": strengthen " + nameOf($("g" + g + "-factor").value));
-      lines.push("What might be different:");
-      lines.push($("g" + g + "-diff").value.trim() || "(blank)");
-      lines.push("Steps I could take:");
-      lines.push($("g" + g + "-steps").value.trim() || "(blank)");
+      lines.push(pq.q);
+      lines.push("  You: " + (i === undefined ? "(not answered)" : pq.options[i]));
+      lines.push("  " + pctLabel(pq) + " of " + pq.who + " " + pq.groupLabel + ". Source: " + pq.source);
     });
     lines.push("");
     lines.push("This is a reflection tool, not a test or a diagnosis.");
@@ -675,12 +840,12 @@ footer strong { color: var(--ink); }
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
     a.href = url;
-    a.download = "protective-factors-reflection.txt";
+    a.download = "protective-factors-results.txt";
     document.body.appendChild(a);
     a.click();
     a.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    $("status").textContent = "Downloaded protective-factors-reflection.txt to your device.";
+    $("status").textContent = "Downloaded protective-factors-results.txt to your device.";
   });
 
   function buildPrintout() {
@@ -689,14 +854,13 @@ footer strong { color: var(--ink); }
     h += "<h2>Part 1: Average rating by factor (1 to 5)</h2><table><tr><th>Factor</th><th>Average</th></tr>";
     avgs.forEach(function (a) { h += "<tr><td>" + esc(a.f.name) + "</td><td>" + (a.avg ? fmt(a.avg) : "Not finished") + "</td></tr>"; });
     h += "</table>";
-    h += "<h2>Part 2: Reflection</h2>";
-    h += "<p><strong>Most helpful factor in hard times:</strong> " + esc(nameOf($("best").value)) + "</p>";
-    h += "<p><strong>How I’ve used it:</strong></p><p class=\"ans\">" + esc($("best-how").value.trim() || "(blank)") + "</p>";
-    [0, 1].forEach(function (g) {
-      h += "<h2>Goal " + (g + 1) + ": " + esc(nameOf($("g" + g + "-factor").value)) + "</h2>";
-      h += "<p><strong>What might be different:</strong></p><p class=\"ans\">" + esc($("g" + g + "-diff").value.trim() || "(blank)") + "</p>";
-      h += "<p><strong>Steps I could take:</strong></p><p class=\"ans\">" + esc($("g" + g + "-steps").value.trim() || "(blank)") + "</p>";
+    h += "<h2>Part 2: How you compare</h2><table><tr><th>Question</th><th>You</th><th>Peers</th></tr>";
+    PEERS.forEach(function (pq) {
+      var i = peerAnswers[pq.id];
+      h += "<tr><td>" + esc(pq.q) + "</td><td>" + (i === undefined ? "Not answered" : esc(pq.options[i])) + "</td><td>" +
+        pctLabel(pq) + " of " + esc(pq.who) + " " + esc(pq.groupLabel) + " (" + esc(pq.source) + ")</td></tr>";
     });
+    h += "</table>";
     h += "<p style=\"margin-top:14pt\"><em>A reflection tool, not a test or a diagnosis.</em></p>";
     $("printout").innerHTML = h;
   }
@@ -704,26 +868,36 @@ footer strong { color: var(--ink); }
   $("print").addEventListener("click", function () { buildPrintout(); window.print(); });
 
   $("clear").addEventListener("click", function () {
-    if (!window.confirm("Clear all your ratings and writing from this page?")) return;
+    if (!window.confirm(SHARING && everSaved
+      ? "Clear all your answers from this page? Scores already saved to the class results stay there anonymously."
+      : "Clear all your answers from this page?")) return;
+    flushOnLeave();
+    SUB_ID = getSubId(true);
+    dirty = false;
+    everSaved = false;
+    clearTimeout(saveTimer);
+    if (SHARING) $("share-status").textContent = "Finish all 15 ratings in Part 1 to add your scores to the class results.";
     answers = {};
-    userPicked = { best: false, g0: false, g1: false };
-    document.querySelectorAll('#factors input[type="radio"]').forEach(function (r) { r.checked = false; });
-    document.querySelectorAll("textarea").forEach(function (t) { t.value = ""; });
-    document.querySelectorAll("select").forEach(function (s) { s.value = ""; });
-    $("g0-ideas").innerHTML = ""; $("g1-ideas").innerHTML = "";
+    peerAnswers = {};
+    document.querySelectorAll('input[type="radio"]').forEach(function (r) { r.checked = false; });
+    PEERS.forEach(function (pq) {
+      var box = $("cmp-" + pq.id);
+      box.hidden = true;
+      box.querySelector(".fill").style.width = "0%";
+    });
     $("printout").innerHTML = "";
     update();
     $("status").textContent = "Cleared. Nothing from this session remains on the page.";
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
-  // Warn before leaving if there's unsaved work (nothing is stored)
+  // Warn before leaving with answers on the page (nothing is stored)
   window.addEventListener("beforeunload", function (e) {
-    var hasText = Array.prototype.some.call(document.querySelectorAll("textarea"), function (t) { return t.value.trim(); });
-    if (Object.keys(answers).length || hasText) { e.preventDefault(); e.returnValue = ""; }
+    if (Object.keys(answers).length || Object.keys(peerAnswers).length) { e.preventDefault(); e.returnValue = ""; }
   });
 
   update();
+  loadClassStats();
 })();
 </script>
 </body>
