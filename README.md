@@ -66,6 +66,7 @@ At St Ignatius, students assented and parents consented to this anonymous data c
 |---|---|
 | `index.html` | The complete web page (HTML, CSS, and JavaScript in one file). This is what GitHub Pages serves to students. |
 | `Code.gs` | The Google Apps Script that saves responses to a Google Sheet and sends class averages back to the page. |
+| `dashboard.html` | The instructor dashboard: class averages and trends by semester, school year, and section. |
 | `README.md` | This file. |
  
 ---
@@ -159,6 +160,27 @@ Part 1 is adapted from the ideas in Therapist Aid's "Protective Factors" workshe
 - The **Trends** tab averages every column by school year and charts the six factors over time. Years with fewer than 5 students are too small to read much into.
 - Class averages describe the group, not any student. Treat changes from year to year as prompts for discussion, not as evidence about a particular cohort; small classes and who chooses to take the self-check both affect the numbers.
 - **Do not try to match rows to students.** The instrument was built so that this isn't possible, and students were told it wouldn't be.
+### Instructor dashboard
+
+`dashboard.html` shows the class results by **semester** or **school year**, with optional filtering by section:
+
+- headline tiles for the most recent term (students, strongest factor, factor with the most room to grow, loneliness), each compared with the term before
+- a line chart of the six factor averages over time, with a table view
+- a factor detail table: average, change, spread (SD), share below 2.5, share at 4 or higher, and how often each factor was a student's lowest
+- the four Part 2 measures over time against their national figures
+- a section-by-section comparison for the chosen term
+- a CSV download of everything shown
+
+It receives **class averages only**, never individual rows, and any group (a term, or a section within a term) with fewer than `MIN_N` students is hidden, as on the student page. Semesters are worked out from each response's date: Fall runs from `YEAR_STARTS_MONTH` through December and Spring from January on.
+
+**Set it up (once):**
+
+1. Update `Code.gs` in your Sheet's Apps Script with the version in this repository, and redeploy it as a new version (see "Updating the script later").
+2. In the Apps Script editor, choose `setDashboardKey` in the function menu and click **Run**. Copy the key it shows.
+3. Open `https://YOUR-USERNAME.github.io/protective-factors/dashboard.html` and paste the key. Tick "Remember the key on this device" only on your own computer.
+
+Keep the key away from students. Running `setDashboardKey` again replaces it, and the old key stops working. To look at the layout before connecting, open `dashboard.html?demo`, which uses made-up sample data. `dashboard.html` uses the same `SHEET_URL` as `index.html`, so change it in both files if you adopt the instrument.
+
 ### Sharing and reuse
  
 Educators are welcome to adopt and adapt this instrument for their own classrooms. Please keep the developer credit and the acknowledgements below, and note your own changes.

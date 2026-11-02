@@ -12,6 +12,10 @@
  * Setup: paste into Extensions > Apps Script in a new Google Sheet, run setup()
  * once, then Deploy > New deployment > Web app (Execute as: Me, Who has access: Anyone).
  * After editing this script later, redeploy: Deploy > Manage deployments > Edit > New version.
+ *
+ * Instructor dashboard (dashboard.html): run setDashboardKey() once to create a private key.
+ * The dashboard asks for that key and receives class averages by semester, school year,
+ * and section. It never receives individual rows, and groups under MIN_N stay hidden.
  */
 
 var RESPONSES = 'Responses';
@@ -27,6 +31,9 @@ var HEADERS = [
   'Page version', 'Submission ID (random)'
 ];
 var ID_COL = HEADERS.length;   // column O
+var KEY_PROP = 'DASHBOARD_KEY';
+var LOW_CUTOFF = 2.5;           // dashboard: share of students whose factor average is below this
+var HIGH_CUTOFF = 4;            // dashboard: share of students whose factor average is at or above this
 
 /* ---------- One-time setup: run this once from the editor ---------- */
 function setup() {
@@ -115,7 +122,7 @@ function doPost(e) {
     } else {
       sh.appendRow([today, schoolYear(today), section].concat(factorVals).concat([close, active, sleep, lonely, version, id]));
     }
-    CacheService.getScriptCache().remove('stats');
+    CacheService.getScriptCache().removeAll(['stats', 'dash']);
     return json({ ok: true });
   } catch (err) {
     return json({ ok: false, error: String(err.message || err) });
@@ -125,7 +132,10 @@ function doPost(e) {
 }
 
 /* ---------- Return class averages to the page ---------- */
-function doGet() {
+function doGet(e) {
+  var params = (e && e.parameter) || {};
+  if (params.view === 'dashboard') return dashboard(params.key);
+
   var cache = CacheService.getScriptCache();
   var cached = cache.get('stats');
   if (cached) return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
@@ -151,6 +161,136 @@ function doGet() {
   var text = JSON.stringify(out);
   cache.put('stats', text, 60);   // refresh at most once a minute
   return ContentService.createTextOutput(text).setMimeType(ContentService.MimeType.JSON);
+}
+
+/* ---------- Instructor dashboard ---------- */
+// Run once from the editor. Creates (or replaces) the key the dashboard asks for.
+// Running it again makes a new key and the old one stops working.
+function setDashboardKey() {
+  var key = (Utilities.getUuid() + Utilities.getUuid()).replace(/-/g, '').slice(0, 32);
+  PropertiesService.getScriptProperties().setProperty(KEY_PROP, key);
+  CacheService.getScriptCache().remove('dash');
+  var msg = 'Your dashboard key:\n\n' + key + '\n\nCopy it now and paste it into dashboard.html when it asks. ' +
+    'Anyone with this key can see class averages (never individual rows). Run setDashboardKey again to replace it.';
+  Logger.log(msg);
+  try { SpreadsheetApp.getUi().alert(msg); } catch (x) { /* run from a trigger or API: the log has it */ }
+}
+
+function dashboard(key) {
+  var stored = PropertiesService.getScriptProperties().getProperty(KEY_PROP);
+  if (!stored) return json({ ok: false, error: 'no-key', message: 'Run setDashboardKey() in the Apps Script editor first.' });
+  if (!safeEqual(String(key || ''), stored)) {
+    Utilities.sleep(800);   // slow down guessing
+    return json({ ok: false, error: 'bad-key', message: 'That key is not right.' });
+  }
+
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('dash');
+  if (cached) return ContentService.createTextOutput(cached).setMimeType(ContentService.MimeType.JSON);
+
+  var sh = SpreadsheetApp.getActive().getSheetByName(RESPONSES);
+  var rows = sh.getLastRow() > 1 ? sh.getRange(2, 1, sh.getLastRow() - 1, 13).getValues() : [];
+  rows = rows.filter(function (r) { return r[0] instanceof Date && !isNaN(r[0]); });
+
+  var out = {
+    ok: true,
+    minN: MIN_N,
+    lowCutoff: LOW_CUTOFF,
+    highCutoff: HIGH_CUTOFF,
+    factorIds: FACTOR_IDS,
+    total: rows.length,
+    semesters: groupFor(rows, semesterOf),
+    years: groupFor(rows, function (r) { var y = String(r[1] || schoolYear(r[0])); return { key: y, label: y }; })
+  };
+  var text = JSON.stringify(out);
+  if (text.length < 90000) cache.put('dash', text, 60);
+  return ContentService.createTextOutput(text).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Group rows by term, then by section within each term. Aggregates only.
+function groupFor(rows, keyFn) {
+  var groups = {}, labels = {};
+  rows.forEach(function (r) {
+    var k = keyFn(r);
+    labels[k.key] = k.label;
+    (groups[k.key] = groups[k.key] || []).push(r);
+  });
+  return Object.keys(groups).sort().map(function (k) {
+    var g = groups[k];
+    var bySection = {};
+    g.forEach(function (r) {
+      var s = String(r[2] || '').trim() || '(no section)';
+      (bySection[s] = bySection[s] || []).push(r);
+    });
+    var out = detail(g);
+    out.key = k;
+    out.label = labels[k];
+    out.sections = Object.keys(bySection).sort().map(function (s) {
+      var d = detail(bySection[s]);
+      d.section = s;
+      return d;
+    });
+    return out;
+  });
+}
+
+function detail(rows) {
+  var n = rows.length;
+  if (n < MIN_N) return { n: n };
+
+  var factors = {};
+  FACTOR_IDS.forEach(function (id, i) {
+    var vals = rows.map(function (r) { return Number(r[3 + i]); }).filter(function (v) { return !isNaN(v); });
+    var m = mean(vals);
+    var sd = vals.length > 1
+      ? Math.sqrt(vals.reduce(function (a, v) { return a + (v - m) * (v - m); }, 0) / (vals.length - 1))
+      : 0;
+    factors[id] = {
+      mean: round2(m),
+      sd: round2(sd),
+      low: pct(vals.filter(function (v) { return v < LOW_CUTOFF; }).length, vals.length),
+      high: pct(vals.filter(function (v) { return v >= HIGH_CUTOFF; }).length, vals.length),
+      lowest: 0
+    };
+  });
+
+  // Each student's lowest factor (ties count for every tied factor): the class's most common growth areas
+  rows.forEach(function (r) {
+    var vals = FACTOR_IDS.map(function (_, i) { return Number(r[3 + i]); });
+    var min = Math.min.apply(null, vals);
+    FACTOR_IDS.forEach(function (id, i) { if (vals[i] === min) factors[id].lowest++; });
+  });
+  FACTOR_IDS.forEach(function (id) { factors[id].lowest = pct(factors[id].lowest, n); });
+
+  return {
+    n: n,
+    factors: factors,
+    peers: {
+      close:   pctWhere(rows, 9,  function (v) { return v === 1; }),
+      active5: pctWhere(rows, 10, function (v) { return v >= 5; }),
+      sleep8:  pctWhere(rows, 11, function (v) { return v >= 8; }),
+      lonely:  pctWhere(rows, 12, function (v) { return v === 1; })
+    }
+  };
+}
+
+// Fall = YEAR_STARTS_MONTH to December; Spring = January to the month before.
+function semesterOf(r) {
+  var tz = Session.getScriptTimeZone();
+  var y = Number(Utilities.formatDate(r[0], tz, 'yyyy'));
+  var m = Number(Utilities.formatDate(r[0], tz, 'M'));
+  return m >= YEAR_STARTS_MONTH
+    ? { key: y + '-2', label: 'Fall ' + y }
+    : { key: y + '-1', label: 'Spring ' + y };
+}
+
+function pct(hits, total) { return total ? Math.round(hits / total * 1000) / 10 : null; }
+
+function safeEqual(a, b) {
+  if (a.length !== b.length) return false;
+  var diff = 0;
+  for (var i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
 }
 
 /* ---------- Helpers ---------- */
